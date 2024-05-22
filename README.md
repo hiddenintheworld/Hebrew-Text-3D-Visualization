@@ -70,6 +70,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Thanks to Yoram Gnat and the FontForge team for the 'Stam Ashkenaz CLM' font.
+- Thanks to facetype.js developed by gero3 which can be accessed on the web through http://gero3.github.io/facetype.js/ for conversion of .ttf to .typeface.json
 - Appreciation to the THREE.js community for providing the tools necessary to create engaging 3D web visualizations.
 
 
