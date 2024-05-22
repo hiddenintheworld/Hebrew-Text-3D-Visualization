@@ -1,8 +1,12 @@
 "# 3D Hebrew Text Visualization in React with THREE.js
 
-[![Twitter Follow](https://raw.githubusercontent.com/hiddenintheworld/Hebrew-Text-3D-Visualization/main/public/assets/twitter.png)](https://twitter.com/hiddeninworld)
+<a href="https://twitter.com/hiddeninworld">
+    <img src="https://raw.githubusercontent.com/hiddenintheworld/Hebrew-Text-3D-Visualization/main/public/assets/twitter.png" alt="Twitter Follow" style="width: 100px;"/>
+</a>
 
-[![Etherscan](https://raw.githubusercontent.com/hiddenintheworld/Hebrew-Text-3D-Visualization/main/public/assets/ethereum.png)](https://etherscan.io/address/0xbc7b2461bfaa2fb47bd8f632d0c797c3bfd93b93)
+<a href="https://etherscan.io/address/0xbc7b2461bfaa2fb47bd8f632d0c797c3bfd93b93">
+    <img src="https://raw.githubusercontent.com/hiddenintheworld/Hebrew-Text-3D-Visualization/main/public/assets/ethereum.png" alt="Etherscan" style="width: 100px;"/>
+</a>
 
 This React project uses THREE.js to create a visually engaging 3D visualization of Hebrew text from the book of Genesis, where each character is represented numerically and displayed in unique colors on a customizable 3D grid.
 
