@@ -1,4 +1,4 @@
-"# 3D Hebrew Text Visualization in React with THREE.js
+## 3D Hebrew Text Visualization in React with THREE.js
 
 <p align="center">
     <a href="https://twitter.com/hiddeninworld">
