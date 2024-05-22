@@ -31,7 +31,6 @@ Before you begin, ensure you have the following installed:
    $ git clone https://github.com/your-username/your-project-name.git
    $ cd your-project-name
 
-
 2. **Install Dependencies:**
    ```sh
    $ npm install
