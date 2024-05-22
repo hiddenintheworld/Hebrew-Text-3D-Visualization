@@ -38,7 +38,7 @@ Before you begin, ensure you have the following installed:
   
 3. **Start the Application:**
    ```sh
-   $ npm start
+   $ npm run dev
    
 ## Usage
 
@@ -73,4 +73,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Appreciation to the THREE.js community for providing the tools necessary to create engaging 3D web visualizations.
 
 
-  
+You can test it out on [this live demo](https://hebrew-text-3d-visualization.onrender.com/).
+
