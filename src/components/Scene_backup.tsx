@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 // Import FontLoader and TextGeometry from the examples directory
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const englishLetters: string[] = [
   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -53,28 +52,28 @@ interface GridSize {
 }
 
 function addTextMeshesToScene(text: string, scene: THREE.Scene, font: Font, gridSize: GridSize, spacing: number, letterFilter: { [key: string]: boolean }) {
-    scene.children.slice().forEach(child => scene.remove(child)); // Clear previous meshes
-  
-    const maxChars = gridSize.width * gridSize.height * gridSize.depth;
-    for (let i = 0; i < Math.min(text.length, maxChars); i++) {
-      const letter = text[i];
-      if (!letterFilter[letter]) continue; // Skip letters that are filtered out
-  
-      const color = letterColors[letter] || '#FFFFFF';
-      const material = new THREE.MeshStandardMaterial({ color }); // Use MeshPhongMaterial instead of MeshBasicMaterial
-      const textGeo = new TextGeometry(letter, {
-        font: font,
-        size: 1,
-        height: 0.1,
-      });
-      const mesh = new THREE.Mesh(textGeo, material);
-      const x = i % gridSize.width;
-      const y = Math.floor(i / gridSize.width) % gridSize.height;
-      const z = Math.floor(i / (gridSize.width * gridSize.height));
-      mesh.position.set(x * spacing, y * spacing, z * spacing);
-      scene.add(mesh);
-    }
+  scene.children.slice().forEach(child => scene.remove(child)); // Clear previous meshes
+
+  const maxChars = gridSize.width * gridSize.height * gridSize.depth;
+  for (let i = 0; i < Math.min(text.length, maxChars); i++) {
+    const letter = text[i];
+    if (!letterFilter[letter]) continue; // Skip letters that are filtered out
+
+    const color = letterColors[letter] || '#FFFFFF';
+    const material = new THREE.MeshBasicMaterial({ color });
+    const textGeo = new TextGeometry(letter, {
+      font: font,
+      size: 1,
+      height: 0.1,
+    });
+    const mesh = new THREE.Mesh(textGeo, material);
+    const x = i % gridSize.width;
+    const y = Math.floor(i / gridSize.width) % gridSize.height;
+    const z = Math.floor(i / (gridSize.width * gridSize.height));
+    mesh.position.set(x * spacing, y * spacing, z * spacing);
+    scene.add(mesh);
   }
+}
 
 const Scene = () => {
   const [gui, setGui] = useState<any>(null);
@@ -96,14 +95,9 @@ const Scene = () => {
     // Set background color to black
     renderer.setClearColor(0x000000);
 
-    // In your useEffect hook
-    const light1 = new THREE.PointLight(0xffffff, 1, 100);
-    light1.position.set(50, 50, 50);
-    scene.add(light1);
-
-    const light2 = new THREE.PointLight(0xffffff, 1, 100);
-    light2.position.set(-50, 50, -50);
-    scene.add(light2);
+    const light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(50, 50, 50);
+    scene.add(light);
 
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
@@ -124,14 +118,42 @@ const Scene = () => {
     });
     camera.position.z = 20;
 
-    // OrbitControls setup
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    controls.dampingFactor = 0.25;
-    controls.screenSpacePanning = false;
-    controls.minDistance = 10;
-    controls.maxDistance = 100;
-    controls.maxPolarAngle = Math.PI / 2;
+    // Spherical Coordinates for Camera Control
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let spherical = new THREE.Spherical(50, Math.PI / 4, 0);
+    let zoomSensitivity = 0.1;
+
+    document.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      previousMousePosition.x = e.clientX;
+      previousMousePosition.y = e.clientY;
+    });
+
+    document.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        const deltaX = event.clientX - previousMousePosition.x;
+        const deltaY = event.clientY - previousMousePosition.y;
+        spherical.theta -= deltaX * 0.005;
+        spherical.phi -= deltaY * 0.005;
+        spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi));
+        camera.position.setFromSpherical(spherical);
+        camera.lookAt(scene.position);
+        previousMousePosition.x = event.clientX;
+        previousMousePosition.y = event.clientY;
+      }
+    });
+
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+    });
+
+    document.addEventListener('wheel', function (e) {
+      spherical.radius += e.deltaY * zoomSensitivity;
+      spherical.radius = Math.max(10, Math.min(200, spherical.radius));
+      camera.position.setFromSpherical(spherical);
+      camera.lookAt(scene.position);
+    });
 
     const animate = () => {
       requestAnimationFrame(animate);
