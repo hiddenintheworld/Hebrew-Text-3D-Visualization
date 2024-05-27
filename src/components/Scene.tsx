@@ -61,7 +61,7 @@ function addTextMeshesToScene(text: string, scene: THREE.Scene, font: Font, grid
       if (!letterFilter[letter]) continue; // Skip letters that are filtered out
   
       const color = letterColors[letter] || '#FFFFFF';
-      const material = new THREE.MeshStandardMaterial({ color }); // Use MeshPhongMaterial instead of MeshBasicMaterial
+      const material = new THREE.MeshBasicMaterial({ color }); // Use MeshPhongMaterial instead of MeshBasicMaterial
       const textGeo = new TextGeometry(letter, {
         font: font,
         size: 1,
