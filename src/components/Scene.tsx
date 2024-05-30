@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 // Import FontLoader and TextGeometry from the examples directory
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry';
 import { loadTextData, scanActivePoints } from '../utils/utils';
 import { addTextMeshesToScene } from '../utils/textMesh';
