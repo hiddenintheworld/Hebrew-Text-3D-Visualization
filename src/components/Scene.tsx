@@ -68,8 +68,6 @@ const Scene = () => {
       }
   });
 
-    camera.position.z = 20;
-
     const controls = initControls(camera, renderer);
     // Handle window resize
     handleResize(camera, renderer);
